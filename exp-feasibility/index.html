@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily News</title>
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, Helvetica, sans-serif;
+        }
+
+        body{
+            background:#f4f4f4;
+            color:#222;
+        }
+
+        header{
+            background:#b30000;
+            color:white;
+            padding:20px;
+            text-align:center;
+            box-shadow:0 3px 10px rgba(0,0,0,.2);
+        }
+
+        header h1{
+            font-size:2rem;
+            margin-bottom:5px;
+        }
+
+        header p{
+            opacity:.85;
+        }
+
+        .container{
+            width:90%;
+            max-width:1100px;
+            margin:40px auto;
+        }
+
+        .headline{
+            background:white;
+            border-radius:10px;
+            overflow:hidden;
+            box-shadow:0 10px 25px rgba(0,0,0,.08);
+            margin-bottom:35px;
+        }
+
+        .headline img{
+            width:100%;
+            height:350px;
+            object-fit:cover;
+        }
+
+        .headline-content{
+            padding:25px;
+        }
+
+        .headline h2{
+            font-size:2rem;
+            margin-bottom:10px;
+            color:#b30000;
+        }
+
+        .news-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+            gap:25px;
+        }
+
+        .news-card{
+            background:white;
+            border-radius:10px;
+            padding:20px;
+            box-shadow:0 8px 20px rgba(0,0,0,.08);
+            transition:.3s;
+        }
+
+        .news-card:hover{
+            transform:translateY(-5px);
+            box-shadow:0 12px 25px rgba(0,0,0,.15);
+        }
+
+        .news-card h2{
+            color:#b30000;
+            margin-bottom:12px;
+        }
+
+        .date{
+            display:inline-block;
+            background:#b30000;
+            color:white;
+            padding:5px 10px;
+            border-radius:20px;
+            font-size:.8rem;
+            margin-bottom:15px;
+        }
+
+        .news-card p{
+            line-height:1.7;
+            color:#555;
+        }
+
+        footer{
+            margin-top:50px;
+            text-align:center;
+            padding:20px;
+            background:#222;
+            color:#ddd;
+        }
+
+        @media(max-width:768px){
+
+            .headline img{
+                height:220px;
+            }
+
+            .headline h2{
+                font-size:1.5rem;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>📰 Daily News</h1>
+    <p>Your trusted source for the latest headlines</p>
+</header>
+
+<div class="container">
+
+    <section class="headline">
+
+        <img src="https://picsum.photos/1200/500?random=1">
+
+        <div class="headline-content">
+
+            <h2>NASA Discovers New Earth-Like Planet</h2>
+
+            <span class="date">July 7, 2026</span>
+
+            <p>
+                Scientists have announced the discovery of a potentially habitable
+                exoplanet located several light-years away from Earth. The discovery
+                is expected to reshape future space exploration missions.
+            </p>
+
+        </div>
+
+    </section>
+
+    <section class="news-grid">
+
+        <div class="news-card">
+            <h2>NASA Discovers New Planet</h2>
+
+            <span class="date">2026-07-07</span>
+
+            <p>
+                Scientists discovered a new exoplanet capable of supporting
+                life. Researchers continue studying the planet using advanced
+                space telescopes.
+            </p>
+        </div>
+
+        <div class="news-card">
+            <h2>Sri Lanka Wins Cricket Series</h2>
+
+            <span class="date">2026-07-07</span>
+
+            <p>
+                The national cricket team secured a thrilling victory after
+                defeating Australia in the final ODI, winning the series 3-2.
+            </p>
+        </div>
+
+        <div class="news-card">
+            <h2>AI Startup Raises $500 Million</h2>
+
+            <span class="date">2026-07-06</span>
+
+            <p>
+                A rapidly growing artificial intelligence company announced
+                a new investment round aimed at accelerating research into
+                autonomous systems.
+            </p>
+        </div>
+
+        <div class="news-card">
+            <h2>Global Stock Markets Rise</h2>
+
+            <span class="date">2026-07-05</span>
+
+            <p>
+                Major stock markets recorded gains following encouraging
+                economic reports and positive investor sentiment across
+                global exchanges.
+            </p>
+        </div>
+
+        <div class="news-card">
+            <h2>Medical Researchers Develop New Vaccine</h2>
+
+            <span class="date">2026-07-04</span>
+
+            <p>
+                Researchers have successfully completed early trials of
+                a promising vaccine that may provide protection against
+                emerging viral diseases.
+            </p>
+        </div>
+
+        <div class="news-card">
+            <h2>Tech Conference Showcases Future Robotics</h2>
+
+            <span class="date">2026-07-03</span>
+
+            <p>
+                Industry leaders introduced next-generation robots capable
+                of assisting in healthcare, manufacturing, and disaster
+                response operations.
+            </p>
+        </div>
+
+        <div class="news-card">
+            <h2>Global Stock Market Sees Strong Growth</h2>
+
+            <span class="date">2026-07-07</span>
+
+            <p>
+                The global stock market closed higher today as investors reacted
+                positively to strong earnings reports from several international
+                company leaders and improving economic indicators.
+            </p>
+        </div>
+
+        <div class="news-card">
+            <h2>Technology Company Announces Major Expansion</h2>
+
+            <span class="date">2026-07-06</span>
+
+            <p>
+                A leading technology company revealed plans to expand its operations
+                across Asia, creating thousands of new jobs while boosting the local
+                economy and attracting new investors.
+            </p>
+        </div>
+
+        <div class="news-card">
+            <h2>National Economy Records Fastest Growth in Five Years</h2>
+
+            <span class="date">2026-07-05</span>
+
+            <p>
+                Government officials reported that the national economy experienced
+                significant growth due to increased exports, rising consumer spending,
+                and improvements across several major industries.
+            </p>
+        </div>
+
+        <div class="news-card">
+            <h2>Retail Company Reports Record Quarterly Profit</h2>
+
+            <span class="date">2026-07-04</span>
+
+            <p>
+                The retail company posted record profits this quarter after expanding
+                its online services and increasing sales in international markets,
+                exceeding expectations from financial analysts.
+            </p>
+        </div>
+
+        <div class="news-card">
+            <h2>Investors Optimistic as Market Continues to Rise</h2>
+
+            <span class="date">2026-07-03</span>
+
+            <p>
+                Financial experts stated that the market continues its upward trend
+                following increased investment activity, stronger company performance,
+                and renewed confidence in the global economy.
+            </p>
+        </div>
+
+    </section>
+
+</div>
+
+<footer>
+    © 2026 Daily News | Educational Demo Website
+</footer>
+
+</body>
+</html>
