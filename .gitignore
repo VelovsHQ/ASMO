@@ -14,6 +14,7 @@ __pycache__/
 *.so
 
 .venv/
+**/.venv/
 venv/
 env/
 
@@ -22,6 +23,8 @@ env/
 .ruff_cache/
 .coverage
 htmlcov/
+
+*.egg-info/
 
 # ========================================
 # Environment Variables
@@ -35,6 +38,8 @@ htmlcov/
 # ========================================
 *.db
 *.sqlite3
+
+alembic/versions/__pycache__/
 
 # ========================================
 # Node.js
