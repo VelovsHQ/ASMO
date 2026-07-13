@@ -12,3 +12,17 @@ python-dotenv==1.2.2
 SQLAlchemy==2.0.51
 typing-inspection==0.4.2
 typing_extensions==4.16.0
+fastapi
+uvicorn[standard]
+redis
+celery
+langgraph
+langchain
+langchain-google-genai
+python-jose[cryptography]
+passlib[bcrypt]
+httpx
+firecrawl-py
+feedparser
+playwright
+sentry-sdk
