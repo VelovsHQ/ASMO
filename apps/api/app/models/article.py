@@ -3,6 +3,7 @@ from sqlalchemy.orm import Mapped, mapped_column
 from datetime import datetime
 
 from app.db.base import Base
+from sqlalchemy.sql import func
 
 
 class Article(Base):
@@ -21,6 +22,6 @@ class Article(Base):
     published_at: Mapped[datetime] = mapped_column(DateTime)
 
     created_at: Mapped[datetime] = mapped_column(
-        DateTime,
-        default=datetime.utcnow,
+        DateTime(timezone=True),
+        server_default=func.now(),
     )
