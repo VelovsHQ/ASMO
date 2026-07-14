@@ -52,3 +52,9 @@ class Article(Base):
         "Source",
         back_populates="articles",
     )
+
+    analyses = relationship(
+    "AIAnalysis",
+    back_populates="article",
+    cascade="all, delete-orphan",
+)
