@@ -1,22 +1,17 @@
-from app.db.session import SessionLocal
+from sqlalchemy.orm import Session
+
 from app.models.prediction import Prediction
 
 
 class PredictionService:
 
     @staticmethod
-    def create(**kwargs):
-
-        db = SessionLocal()
+    def create(db: Session, **kwargs):
 
         prediction = Prediction(**kwargs)
 
         db.add(prediction)
 
-        db.commit()
-
-        db.refresh(prediction)
-
-        db.close()
+        db.flush()
 
         return prediction

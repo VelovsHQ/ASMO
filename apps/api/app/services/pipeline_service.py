@@ -1,16 +1,14 @@
 from sqlalchemy import select
 
 from app.db.session import SessionLocal
-
-from app.models.article import Article
 from app.models.market import Market
 
 from app.services.ai_service import (
     analyze_article,
     predict_markets,
 )
-
 from app.services.analysis_service import AnalysisService
+from app.services.article_service import ArticleService
 from app.services.prediction_service import PredictionService
 
 
@@ -21,66 +19,83 @@ class PipelineService:
 
         db = SessionLocal()
 
-        article = db.scalar(
-            select(Article).where(
-                Article.id == article_id
+        try:
+
+            # Load article
+            article = ArticleService.get_by_id(
+                db,
+                article_id,
             )
-        )
 
-        if article is None:
-            db.close()
-            raise Exception("Article not found")
+            if article is None:
+                raise ValueError(f"Article {article_id} not found")
 
-        analysis_result = analyze_article(
-            article.title,
-            article.content,
-        )
+            # AI Analysis
+            analysis_result = analyze_article(
+                article.title,
+                article.content,
+            )
 
-        analysis = AnalysisService.create(
-            article_id=article.id,
-            summary=analysis_result["summary"],
-            event_type=analysis_result["event_type"],
-            sentiment=analysis_result["sentiment"],
-            reasoning=analysis_result["reasoning"],
-            confidence=analysis_result["confidence"],
-            model_name="llama-3.3-70b-versatile",
-        )
+            analysis = AnalysisService.create(
+                db,
+                article_id=article.id,
+                summary=analysis_result["summary"],
+                event_type=analysis_result["event_type"],
+                sentiment=analysis_result["sentiment"],
+                reasoning=analysis_result["reasoning"],
+                confidence=analysis_result["confidence"],
+                model_name="llama-3.3-70b-versatile",
+            )
 
-        prediction_result = predict_markets(
-            article.title,
-            article.content,
-        )
+            # Market Predictions
+            prediction_result = predict_markets(
+                article.title,
+                article.content,
+            )
 
-        created_predictions = []
+            created_predictions = []
 
-        for item in prediction_result["predictions"]:
+            for item in prediction_result["predictions"]:
 
-            market = db.scalar(
-                select(Market).where(
-                    Market.name == item["market"]
+                market = db.scalar(
+                    select(Market).where(
+                        Market.name == item["market"]
+                    )
                 )
-            )
 
-            if market is None:
-                continue
+                if market is None:
+                    continue
 
-            prediction = PredictionService.create(
-                analysis_id=analysis.id,
-                market_id=market.id,
-                direction=item["direction"],
-                impact_min=item["impact_min"],
-                impact_max=item["impact_max"],
-                confidence=item["confidence"],
-                timeframe=item["timeframe"],
-                explanation=item["explanation"],
-            )
+                prediction = PredictionService.create(
+                    db,
+                    analysis_id=analysis.id,
+                    market_id=market.id,
+                    direction=item["direction"],
+                    impact_min=item["impact_min"],
+                    impact_max=item["impact_max"],
+                    confidence=item["confidence"],
+                    timeframe=item["timeframe"],
+                    explanation=item["explanation"],
+                )
 
-            created_predictions.append(prediction)
+                created_predictions.append(prediction)
 
-        db.close()
+            article_id = article.id
+            analysis_id = analysis.id
+            prediction_count = len(created_predictions)
 
-        return {
-            "article": article.id,
-            "analysis": analysis.id,
-            "predictions": len(created_predictions),
-        }
+            # ONE transaction
+            db.commit()
+
+            return {
+                "article": article_id,
+                "analysis": analysis_id,
+                "predictions": prediction_count,
+            }
+
+        except Exception:
+            db.rollback()
+            raise
+
+        finally:
+            db.close()
