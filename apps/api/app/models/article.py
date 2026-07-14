@@ -1,9 +1,10 @@
-from sqlalchemy import String, Text, DateTime
-from sqlalchemy.orm import Mapped, mapped_column
 from datetime import datetime
 
-from app.db.base import Base
+from sqlalchemy import DateTime, ForeignKey, String, Text
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
+
+from app.db.base import Base
 
 
 class Article(Base):
@@ -11,17 +12,49 @@ class Article(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
 
-    title: Mapped[str] = mapped_column(String(500), nullable=False)
+    source_id: Mapped[int] = mapped_column(
+        ForeignKey("sources.id", ondelete="CASCADE"),
+        nullable=False,
+    )
 
-    content: Mapped[str] = mapped_column(Text, nullable=False)
+    title: Mapped[str] = mapped_column(
+        String(500),
+        nullable=False,
+    )
 
-    source: Mapped[str] = mapped_column(String(255), nullable=False)
+    content: Mapped[str] = mapped_column(
+        Text,
+        nullable=False,
+    )
 
-    url: Mapped[str] = mapped_column(String(1000), unique=True, nullable=False)
+    url: Mapped[str] = mapped_column(
+        String(1000),
+        unique=True,
+        nullable=False,
+    )
 
-    published_at: Mapped[datetime] = mapped_column(DateTime)
+    language: Mapped[str] = mapped_column(
+        String(20),
+        default="en",
+    )
 
-    created_at: Mapped[datetime] = mapped_column(
+    published_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        nullable=False,
+    )
+
+    scraped_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         server_default=func.now(),
     )
+
+    source = relationship(
+        "Source",
+        back_populates="articles",
+    )
+
+    analyses = relationship(
+    "AIAnalysis",
+    back_populates="article",
+    cascade="all, delete-orphan",
+)

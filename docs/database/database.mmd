@@ -1,0 +1,27 @@
+erDiagram
+
+USERS ||--|| USER_PREFERENCES : has
+
+USERS ||--o{ WATCHLISTS : owns
+
+USERS ||--o{ ALERTS : receives
+
+USERS ||--o{ CHAT_SESSIONS : owns
+
+CHAT_SESSIONS ||--o{ CHAT_MESSAGES : contains
+
+SOURCES ||--o{ ARTICLES : publishes
+
+ARTICLES ||--|| AI_ANALYSES : analyzed
+
+ARTICLES ||--|| ARTICLE_EMBEDDINGS : embedded
+
+AI_ANALYSES ||--o{ PREDICTIONS : generates
+
+MARKETS ||--o{ PREDICTIONS : affected
+
+PREDICTIONS }o--o{ HISTORICAL_EVENTS : references
+
+PREDICTIONS ||--o{ ALERTS : creates
+
+SCRAPE_JOBS ||--o{ ARTICLES : collects
