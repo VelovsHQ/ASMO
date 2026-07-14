@@ -6,6 +6,8 @@ from sqlalchemy.orm import Mapped, mapped_column
 from app.db.base import Base
 from sqlalchemy.sql import func
 
+from sqlalchemy.orm import relationship
+
 
 class Source(Base):
     __tablename__ = "sources"
@@ -29,4 +31,10 @@ class Source(Base):
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         server_default=func.now(),
+    )
+
+    articles = relationship(
+        "Article",
+        back_populates="source",
+        cascade="all, delete-orphan",
     )
