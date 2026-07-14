@@ -26,3 +26,4 @@ firecrawl-py
 feedparser
 playwright
 sentry-sdk
+openai
