@@ -25,7 +25,7 @@ analysis = AnalysisService.create(
     sentiment=result["sentiment"],
     reasoning=result["reasoning"],
     confidence=result["confidence"],
-    model_name="gemini-2.5-flash",
+    model_name="llama-3.3-70b-versatile",
 )
 
 print(analysis.id)
