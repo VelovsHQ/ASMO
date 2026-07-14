@@ -1,10 +1,24 @@
-from app.scraper.service import fetch_feed
+import feedparser
+
+from app.scraper.parser import parse_entry
+from app.services.article_service import ArticleService
 
 RSS_URL = "https://www.cnbc.com/id/100003114/device/rss/rss.html"
 
-entries = fetch_feed(RSS_URL)
+feed = feedparser.parse(RSS_URL)
 
-print(f"Found {len(entries)} articles\n")
+print(f"Found {len(feed.entries)} articles")
 
-for article in entries[:5]:
-    print(article.title)
+for entry in feed.entries:
+
+    article = parse_entry(entry)
+
+    if ArticleService.exists(article["url"]):
+        continue
+
+    ArticleService.create(
+        source_id=1,
+        **article,
+    )
+
+print("Finished.")
