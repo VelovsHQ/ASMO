@@ -24,6 +24,29 @@ Return ONLY valid JSON.
   "confidence": 0.0,
   "reasoning": ""
 }
+
+"""
+
+PREDICTION_PROMPT = """
+You are a market analyst.
+
+Given an article, predict the impact on financial markets.
+
+Return ONLY JSON.
+
+{
+  "predictions":[
+    {
+      "market":"Gold",
+      "direction":"Bullish",
+      "impact_min":1,
+      "impact_max":3,
+      "confidence":0.91,
+      "timeframe":"Short Term",
+      "explanation":"..."
+    }
+  ]
+}
 """
 
 
@@ -35,6 +58,21 @@ def analyze_article(title: str, content: str):
             (
                 "human",
                 f"Title: {title}\n\nContent:\n{content}",
+            ),
+        ]
+    )
+
+    return json.loads(response.content)
+
+
+def predict_markets(title: str, content: str):
+
+    response = llm.invoke(
+        [
+            ("system", PREDICTION_PROMPT),
+            (
+                "human",
+                f"{title}\n\n{content}",
             ),
         ]
     )
