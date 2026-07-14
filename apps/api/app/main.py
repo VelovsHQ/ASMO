@@ -2,7 +2,10 @@ from fastapi import FastAPI
 
 from app.api.v1.router import api_router
 
-app = FastAPI(title="ASMO API")
+app = FastAPI(
+    title="ASMO API",
+    version="1.0.0",
+)
 
 app.include_router(
     api_router,
@@ -12,4 +15,6 @@ app.include_router(
 
 @app.get("/")
 def root():
-    return {"message": "ASMO API Running"}
+    return {
+        "message": "ASMO API Running",
+    }
