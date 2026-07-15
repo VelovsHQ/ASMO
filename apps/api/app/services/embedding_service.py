@@ -1,10 +1,10 @@
-from openai import OpenAI
+from google import genai
 
 from app.core.config import settings
 
-client = OpenAI(
-    api_key=settings.GROQ_API_KEY,
-    base_url="https://api.groq.com/openai/v1",
+
+client = genai.Client(
+    api_key=settings.GEMINI_API_KEY,
 )
 
 
@@ -12,4 +12,10 @@ class EmbeddingService:
 
     @staticmethod
     def generate_embedding(text: str):
-        raise NotImplementedError("Coming next step")
+
+        response = client.models.embed_content(
+            model="gemini-embedding-2",
+            contents=text,
+        )
+
+        return response.embeddings[0].values
