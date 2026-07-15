@@ -18,6 +18,9 @@ export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
   const [editName, setEditName] = useState("");
   const [editEmail, setEditEmail] = useState("");
+  const [isChangingPassword, setIsChangingPassword] = useState(false);
+  const [passwordForm, setPasswordForm] = useState({ current: "", new: "", confirm: "" });
+  const [passwordSuccess, setPasswordSuccess] = useState(false);
 
   if (!profileLoaded || !interestsLoaded || !watchlistsLoaded || !alertsLoaded) return null;
 
@@ -246,9 +249,71 @@ export default function ProfilePage() {
             <button onClick={handleEditOpen} className="flex items-center gap-3 p-3 text-sm font-semibold text-foreground hover:bg-muted rounded-xl transition-colors text-left w-full">
               <Edit2 size={18} className="text-muted-foreground" /> Edit Profile
             </button>
-            <button className="flex items-center gap-3 p-3 text-sm font-semibold text-foreground hover:bg-muted rounded-xl transition-colors text-left w-full">
-              <Lock size={18} className="text-muted-foreground" /> Change Password
-            </button>
+            <div className="flex flex-col">
+              <button 
+                onClick={() => setIsChangingPassword(!isChangingPassword)} 
+                className={`flex items-center gap-3 p-3 text-sm font-semibold hover:bg-muted rounded-xl transition-colors text-left w-full ${isChangingPassword ? "bg-muted text-foreground" : "text-foreground"}`}
+              >
+                <Lock size={18} className={isChangingPassword ? "text-accent" : "text-muted-foreground"} /> Change Password
+              </button>
+              <AnimatePresence>
+                {isChangingPassword && (
+                  <motion.div 
+                    initial={{ opacity: 0, height: 0 }} 
+                    animate={{ opacity: 1, height: "auto" }} 
+                    exit={{ opacity: 0, height: 0 }}
+                    className="overflow-hidden"
+                  >
+                    <div className="flex flex-col gap-3 p-4 mt-2 bg-background border border-border rounded-xl shadow-sm mx-1 mb-1">
+                      {passwordSuccess ? (
+                        <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="flex flex-col items-center justify-center gap-3 py-6">
+                          <div className="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center text-green-500">
+                            <Check size={24} />
+                          </div>
+                          <span className="text-sm font-bold text-foreground">Password Updated</span>
+                        </motion.div>
+                      ) : (
+                        <div className="flex flex-col gap-3">
+                          <div className="flex flex-col gap-1.5">
+                            <label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Current Password</label>
+                            <input type="password" value={passwordForm.current} onChange={e => setPasswordForm({...passwordForm, current: e.target.value})} className="bg-muted/30 border border-border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-accent/50 focus:border-accent transition-all" />
+                          </div>
+                          <div className="flex flex-col gap-1.5">
+                            <label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">New Password</label>
+                            <input type="password" value={passwordForm.new} onChange={e => setPasswordForm({...passwordForm, new: e.target.value})} className="bg-muted/30 border border-border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-accent/50 focus:border-accent transition-all" />
+                          </div>
+                          <div className="flex flex-col gap-1.5">
+                            <label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Confirm New Password</label>
+                            <input type="password" value={passwordForm.confirm} onChange={e => setPasswordForm({...passwordForm, confirm: e.target.value})} className="bg-muted/30 border border-border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-accent/50 focus:border-accent transition-all" />
+                          </div>
+                          <div className="flex gap-2 mt-2 pt-3 border-t border-border/50">
+                            <button 
+                              onClick={() => {
+                                if (passwordForm.new && passwordForm.new === passwordForm.confirm) {
+                                  setPasswordSuccess(true);
+                                  setTimeout(() => {
+                                    setIsChangingPassword(false);
+                                    setPasswordSuccess(false);
+                                    setPasswordForm({ current: "", new: "", confirm: "" });
+                                  }, 2000);
+                                }
+                              }} 
+                              disabled={!passwordForm.new || passwordForm.new !== passwordForm.confirm}
+                              className="bg-accent text-accent-foreground px-3 py-2 rounded-md text-xs font-bold hover:bg-accent/90 transition-colors flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                              Update Password
+                            </button>
+                            <button onClick={() => setIsChangingPassword(false)} className="bg-transparent border border-border text-foreground px-3 py-2 rounded-md text-xs font-semibold hover:bg-muted transition-colors flex-1">
+                              Cancel
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
             <Link href="/settings" className="flex items-center gap-3 p-3 text-sm font-semibold text-foreground hover:bg-muted rounded-xl transition-colors w-full">
               <Settings size={18} className="text-muted-foreground" /> Preferences
             </Link>
