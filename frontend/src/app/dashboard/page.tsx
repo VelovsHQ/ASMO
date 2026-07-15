@@ -2,6 +2,7 @@
 
 import { useInterests } from "@/hooks/useInterests";
 import MarketPulseScore from "@/components/MarketPulseScore";
+import GlobalMarketPulse from "@/components/GlobalMarketPulse";
 import { generateMockMarketSignal } from "@/lib/mockData";
 import Link from "next/link";
 import { useMemo } from "react";
@@ -56,8 +57,11 @@ export default function DashboardPage() {
         </div>
       </section>
 
+      {/* Global Market Pulse Section */}
+      <GlobalMarketPulse />
+
       {/* Your Markets Section */}
-      <section className="flex flex-col gap-4 mt-4">
+      <section className="flex flex-col gap-4 mt-2">
         <h2 className="text-xl font-semibold tracking-tight">Your Markets</h2>
         {interests.length === 0 ? (
           <div className="p-12 text-center border border-dashed border-border rounded-xl bg-muted/10">
