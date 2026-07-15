@@ -30,10 +30,41 @@ class PipelineService:
             if article is None:
                 raise ValueError(f"Article {article_id} not found")
 
+            embedding = EmbeddingService.generate_embedding(
+                article.content,
+            )
+
+            similar_embeddings = (
+                ArticleEmbeddingService.find_similar(
+                    db=db,
+                    embedding=embedding,
+                    limit=5,
+                )
+            )
+
+            historical_articles = (
+                ArticleEmbeddingService.get_articles_from_embeddings(
+                    db=db,
+                    embeddings=similar_embeddings,
+                )
+            )
+
+            history = "\n\n".join(
+                f"""
+Title:
+{item.title}
+
+Content:
+{item.content[:1200]}
+"""
+                for item in historical_articles
+            )
+
             # AI Analysis
             analysis_result = analyze_article(
                 article.title,
                 article.content,
+                history,
             )
 
             analysis = AnalysisService.create(

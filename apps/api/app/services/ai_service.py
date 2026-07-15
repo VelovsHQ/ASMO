@@ -84,7 +84,11 @@ Do not omit the top-level `predictions` key.
 """
 
 
-def analyze_article(title: str, content: str):
+def analyze_article(
+    title: str,
+    content: str,
+    history: str = "",
+):
 
     response = client.chat.completions.create(
         model=MODEL,
@@ -97,7 +101,23 @@ def analyze_article(title: str, content: str):
             },
             {
                 "role": "user",
-                "content": f"Title: {title}\n\nContent:\n{content}",
+                "content": f"""Current Article
+
+Title:
+{title}
+
+Content:
+{content}
+
+----------------------------------
+
+Relevant Historical Articles
+
+{history}
+
+----------------------------------
+
+Analyze the current article while considering the historical context above.""",
             },
         ],
     )

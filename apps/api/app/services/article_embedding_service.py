@@ -54,3 +54,20 @@ class ArticleEmbeddingService:
                 .limit(limit)
             )
         )
+
+    @staticmethod
+    def get_articles_from_embeddings(
+        db: Session,
+        embeddings: list[ArticleEmbedding],
+    ):
+
+        from app.models.article import Article
+
+        ids = [e.article_id for e in embeddings]
+
+        return list(
+            db.scalars(
+                select(Article)
+                .where(Article.id.in_(ids))
+            )
+        )
