@@ -4,6 +4,7 @@ import "./globals.css";
 import { LayoutDashboard, LineChart, Newspaper, List, Bell, Search, Settings, MessageSquare } from "lucide-react";
 import Link from "next/link";
 import SignupPrompt from "@/components/SignupPrompt";
+import CopilotChat from "@/components/CopilotChat";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -68,12 +69,8 @@ export default function RootLayout({
         <main className="flex-1 relative h-full overflow-y-auto">
           {children}
           
-          {/* Persistent Floating Chat Button */}
-          <div className="fixed bottom-6 right-6 z-50">
-            <button className="w-14 h-14 rounded-full bg-accent text-accent-foreground shadow-lg flex items-center justify-center hover:bg-accent/90 transition-colors focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background cursor-pointer">
-              <MessageSquare size={24} />
-            </button>
-          </div>
+          {/* Persistent Floating Chat */}
+          <CopilotChat isFloating={true} />
 
           <SignupPrompt />
         </main>
