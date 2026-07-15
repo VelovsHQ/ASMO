@@ -1,12 +1,30 @@
 @import "tailwindcss";
 
 :root {
-  /* Dark mode by default */
-  --background: #09090b; /* Very dark gray, almost black */
-  --foreground: #fafafa; /* High-contrast white */
-  --muted: #18181b; /* Muted background for panels/cards */
-  --muted-foreground: #a1a1aa; /* Muted text */
-  --accent: #2563eb; /* Single accent color - deep blue */
+  /* Light mode (WIP) */
+  --background: #ffffff;
+  --foreground: #09090b;
+  --muted: #f4f4f5;
+  --muted-foreground: #71717a;
+  --accent: #2563eb;
+  --accent-foreground: #ffffff;
+  --border: #e4e4e7;
+  
+  /* Market states */
+  --bullish: #16a34a;
+  --bearish: #dc2626;
+  --neutral: #ca8a04;
+  
+  --radius: 0.5rem;
+}
+
+.dark {
+  /* Dark mode (default & recommended) */
+  --background: #09090b;
+  --foreground: #fafafa;
+  --muted: #18181b;
+  --muted-foreground: #a1a1aa;
+  --accent: #2563eb;
   --accent-foreground: #ffffff;
   --border: #27272a;
   
@@ -14,8 +32,6 @@
   --bullish: #22c55e;
   --bearish: #ef4444;
   --neutral: #eab308;
-  
-  --radius: 0.5rem;
 }
 
 @theme inline {
