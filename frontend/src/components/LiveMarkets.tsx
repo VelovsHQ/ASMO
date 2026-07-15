@@ -34,11 +34,11 @@ export default function LiveMarkets() {
 
           const jitter = (Math.random() - 0.5) * (market.price * 0.001); // 0.1% jitter
           const newPrice = market.price + jitter;
-          
+
           // Calculate new change percent slightly adjusted
           const changeJitter = (Math.random() - 0.5) * 0.1;
           const newChange = market.changePercent + changeJitter;
-          
+
           let newState: MarketState = "neutral";
           if (newChange > 0.05) newState = "bullish";
           else if (newChange < -0.05) newState = "bearish";
@@ -69,7 +69,7 @@ export default function LiveMarkets() {
           <span className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">Live</span>
         </div>
       </div>
-      
+
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
         {markets.map((market) => (
           <MarketCard key={market.id} market={market} />
@@ -82,18 +82,18 @@ export default function LiveMarkets() {
 function MarketCard({ market }: { market: Market }) {
   const isBullish = market.state === "bullish";
   const isBearish = market.state === "bearish";
-  
-  const colorClass = isBullish 
-    ? "text-bullish" 
-    : isBearish 
-      ? "text-bearish" 
+
+  const colorClass = isBullish
+    ? "text-bullish"
+    : isBearish
+      ? "text-bearish"
       : "text-neutral";
 
   return (
     <motion.div
       key={market.updatedAt}
       initial={{ backgroundColor: "var(--color-muted)", scale: 1 }}
-      animate={{ 
+      animate={{
         backgroundColor: ["var(--color-muted)", isBullish ? "rgba(34, 197, 94, 0.1)" : isBearish ? "rgba(239, 68, 68, 0.1)" : "rgba(234, 179, 8, 0.1)", "var(--color-muted)"],
       }}
       transition={{ duration: 0.8, ease: "easeOut" }}
@@ -102,12 +102,12 @@ function MarketCard({ market }: { market: Market }) {
       <div className="flex justify-between items-start mb-2">
         <span className="font-semibold text-foreground">{market.name}</span>
       </div>
-      
+
       <div className="flex flex-col gap-1 mt-auto">
         <span className="text-2xl font-mono tracking-tight font-bold text-foreground">
           {market.price < 100 ? market.price.toFixed(2) : market.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
         </span>
-        <span className={\`text-sm font-medium \${colorClass}\`}>
+        <span className={`text-sm font-medium ${colorClass}`}>
           {market.changePercent > 0 ? "+" : ""}{market.changePercent.toFixed(2)}%
         </span>
       </div>
