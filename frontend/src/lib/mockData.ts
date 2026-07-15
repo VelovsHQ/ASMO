@@ -89,3 +89,95 @@ export function getGlobalEvents(): GlobalEvent[] {
     }
   ];
 }
+
+export interface MarketDriver {
+  title: string;
+}
+
+export interface TimelineEvent {
+  id: string;
+  timestamp: string;
+  description: string;
+}
+
+export interface PredictionDataPoint {
+  time: string;
+  value: number;
+}
+
+export interface MarketPrediction {
+  timeframe: "24h" | "7d" | "30d";
+  direction: "up" | "down" | "neutral";
+  data: PredictionDataPoint[];
+}
+
+export interface Article {
+  id: string;
+  headline: string;
+  source: string;
+}
+
+export interface SimilarEvent {
+  id: string;
+  title: string;
+  date: string;
+  outcome: string;
+}
+
+export interface MarketDetail extends MarketSignal {
+  summary: string[];
+  drivers: MarketDriver[];
+  sources: string[];
+  timeline: TimelineEvent[];
+  predictions: MarketPrediction[];
+  articles: Article[];
+  similarEvents: SimilarEvent[];
+}
+
+export function getMockMarketDetail(symbol: string): MarketDetail {
+  const decodedSymbol = decodeURIComponent(symbol).toUpperCase();
+  // Reverse lookup name from symbol map, or just use symbol as name
+  const name = Object.keys(SYMBOL_MAP).find(key => SYMBOL_MAP[key] === decodedSymbol.toLowerCase()) || decodedSymbol;
+  
+  const signal = generateMockMarketSignal(name);
+  
+  return {
+    ...signal,
+    summary: [
+      `${signal.name} is currently showing a ${signal.trend.toLowerCase()} trend driven by recent macroeconomic shifts and sector-specific catalysts. Institutional volume has seen an uptick over the last 48 hours.`,
+      "Analysts point to underlying momentum gathering pace, suggesting the current price level might serve as a strong pivot point for the short to medium term."
+    ],
+    drivers: [
+      { title: "Inflation Data Release" },
+      { title: "Central Bank Buying" },
+      { title: "Weak Dollar" }
+    ],
+    sources: ["Reuters", "Bloomberg", "CNBC", "WSJ"],
+    timeline: [
+      { id: "t1", timestamp: "10:42", description: "Fed Speech Commences" },
+      { id: "t2", timestamp: "10:44", description: "Dollar Index Drops 0.2%" },
+      { id: "t3", timestamp: "10:47", description: `${signal.name} breaks resistance` },
+      { id: "t4", timestamp: "10:49", description: "ASMO Prediction Updated" }
+    ],
+    predictions: [
+      {
+        timeframe: "24h", direction: "up", data: Array.from({length: 24}, (_, i) => ({ time: `${i}:00`, value: 100 + Math.random() * 10 + i * 0.5 }))
+      },
+      {
+        timeframe: "7d", direction: "up", data: Array.from({length: 7}, (_, i) => ({ time: `Day ${i+1}`, value: 100 + Math.random() * 20 + i * 2 }))
+      },
+      {
+        timeframe: "30d", direction: "neutral", data: Array.from({length: 30}, (_, i) => ({ time: `Day ${i+1}`, value: 100 + Math.sin(i/3)*10 + Math.random()*5 }))
+      }
+    ],
+    articles: [
+      { id: "a1", headline: `${signal.name} surges as new data changes outlook`, source: "Bloomberg" },
+      { id: "a2", headline: `What the latest Fed minutes mean for ${signal.name}`, source: "Reuters" },
+      { id: "a3", headline: "Market Analysis: Short squeeze potential", source: "CNBC" }
+    ],
+    similarEvents: [
+      { id: "s1", title: "2023 Q2 Tech Rally", date: "May 2023", outcome: "Price increased 14% over 3 weeks" },
+      { id: "s2", title: "Post-CPI Shock", date: "August 2022", outcome: "Consolidation phase lasting 2 months" }
+    ]
+  };
+}
