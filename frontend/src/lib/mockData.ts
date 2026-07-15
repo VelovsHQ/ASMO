@@ -44,3 +44,48 @@ export function generateMockMarketSignal(name: string): MarketSignal {
     momentum: momentums[Math.floor(Math.random() * momentums.length)],
   };
 }
+
+export interface ImpactedAsset {
+  name: string;
+  direction: "up" | "down" | "neutral";
+}
+
+export interface GlobalEvent {
+  id: string;
+  severity: "urgent" | "hot" | "watch";
+  headline: string;
+  impacts: ImpactedAsset[];
+}
+
+export function getGlobalEvents(): GlobalEvent[] {
+  return [
+    {
+      id: "e1",
+      severity: "urgent",
+      headline: "Fed unexpectedly announces 50bps rate cut",
+      impacts: [
+        { name: "Gold", direction: "up" },
+        { name: "NASDAQ", direction: "up" },
+        { name: "USD", direction: "down" }
+      ]
+    },
+    {
+      id: "e2",
+      severity: "hot",
+      headline: "OPEC+ slashes oil production targets",
+      impacts: [
+        { name: "Oil", direction: "up" },
+        { name: "S&P 500", direction: "down" }
+      ]
+    },
+    {
+      id: "e3",
+      severity: "watch",
+      headline: "AI regulation bill passes EU parliament",
+      impacts: [
+        { name: "AI Stocks", direction: "neutral" },
+        { name: "Microsoft", direction: "down" }
+      ]
+    }
+  ];
+}
