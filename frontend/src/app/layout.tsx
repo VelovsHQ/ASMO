@@ -7,6 +7,7 @@ import SignupPrompt from "@/components/SignupPrompt";
 import CopilotChat from "@/components/CopilotChat";
 import NotificationDropdown from "@/components/NotificationDropdown";
 import GlobalSearch from "@/components/GlobalSearch";
+import SidebarSearchButton from "@/components/SidebarSearchButton";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -51,8 +52,7 @@ export default function RootLayout({
             <div className="pt-4 pb-2">
               <div className="h-px bg-border w-full" />
             </div>
-            {/* Search route isn't created but icon was requested */}
-            <NavItem href="#" icon={<Search size={20} />} label="Search" />
+            <SidebarSearchButton />
             <NavItem href="/settings" icon={<Settings size={20} />} label="Settings" />
           </nav>
           <div className="p-4 border-t border-border">
