@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useSettings } from "@/hooks/useSettings";
+import { useProfile } from "@/hooks/useProfile";
 import { useInterests, MARKETS } from "@/hooks/useInterests";
 import { User, Bell, Palette, Shield, Info, Trash2, Target } from "lucide-react";
 import Link from "next/link";
@@ -26,10 +27,11 @@ function Toggle({ checked, onChange, label, description }: { checked: boolean, o
 export default function SettingsPage() {
   const { settings, updateSettings, isLoaded: settingsLoaded } = useSettings();
   const { interests, toggleInterest, isLoaded: interestsLoaded } = useInterests();
+  const { profile, isLoaded: profileLoaded } = useProfile();
 
   const [showClearConfirm, setShowClearConfirm] = useState(false);
 
-  if (!settingsLoaded || !interestsLoaded) return null;
+  if (!settingsLoaded || !interestsLoaded || !profileLoaded) return null;
 
   const handleClearData = () => {
     localStorage.clear();
@@ -56,12 +58,12 @@ export default function SettingsPage() {
           </h2>
           <div className="flex items-center gap-6 p-6 border border-border bg-muted/10 rounded-2xl">
             <div className="w-20 h-20 rounded-full bg-muted flex items-center justify-center text-2xl font-bold uppercase text-muted-foreground border-4 border-background shadow-sm">
-              JD
+              {profile.avatar}
             </div>
             <div className="flex flex-col gap-1">
-              <h3 className="font-semibold text-lg text-foreground">John Doe</h3>
-              <p className="text-muted-foreground text-sm">john.doe@example.com</p>
-              <button className="text-accent text-sm font-medium hover:underline mt-1 w-fit">Edit Profile</button>
+              <h3 className="font-semibold text-lg text-foreground">{profile.name}</h3>
+              <p className="text-muted-foreground text-sm">{profile.email}</p>
+              <Link href="/profile" className="text-accent text-sm font-medium hover:underline mt-1 w-fit">Edit Profile</Link>
             </div>
           </div>
         </section>
