@@ -181,3 +181,64 @@ export function getMockMarketDetail(symbol: string): MarketDetail {
     ]
   };
 }
+
+export interface NewsDriver {
+  id: string;
+  theme: string;
+  lastUpdatedMsAgo: number;
+  sourceCount: number;
+  aiSummary: string;
+  affectedMarkets: { symbol: string; trend: Trend }[];
+}
+
+export function getNewsDrivers(): NewsDriver[] {
+  return [
+    {
+      id: "d1",
+      theme: "Federal Reserve Rate Cut Sentiment",
+      lastUpdatedMsAgo: 12 * 60 * 1000,
+      sourceCount: 34,
+      aiSummary: "Multiple Fed officials signaled openness to rate cuts sooner than expected, citing softening inflation data and labor market cooling. Markets are pricing in a higher probability of a cut in the next quarter.",
+      affectedMarkets: [
+        { symbol: "xauusd", trend: "Bullish" },
+        { symbol: "ndx", trend: "Bullish" },
+        { symbol: "usdjpy", trend: "Bearish" }
+      ]
+    },
+    {
+      id: "d2",
+      theme: "Middle East Geopolitical Tensions",
+      lastUpdatedMsAgo: 45 * 60 * 1000,
+      sourceCount: 89,
+      aiSummary: "Escalating tensions have raised concerns over supply chain disruptions and energy supply stability. Safe-haven assets are seeing increased inflows while energy markets remain volatile.",
+      affectedMarkets: [
+        { symbol: "wti", trend: "Bullish" },
+        { symbol: "xauusd", trend: "Bullish" },
+        { symbol: "spx", trend: "Bearish" }
+      ]
+    },
+    {
+      id: "d3",
+      theme: "AI Semiconductor Demand",
+      lastUpdatedMsAgo: 120 * 60 * 1000,
+      sourceCount: 42,
+      aiSummary: "Tech giants announced massive data center investments, signaling sustained demand for advanced AI chips. Semiconductor stocks are reacting positively despite valuation concerns.",
+      affectedMarkets: [
+        { symbol: "nvda", trend: "Bullish" },
+        { symbol: "ndx", trend: "Bullish" },
+        { symbol: "ai-index", trend: "Bullish" }
+      ]
+    },
+    {
+      id: "d4",
+      theme: "China Economic Stimulus Measures",
+      lastUpdatedMsAgo: 240 * 60 * 1000,
+      sourceCount: 15,
+      aiSummary: "The PBOC announced targeted liquidity injections to support the struggling property sector and boost consumer spending, leading to mixed reactions across global commodity markets.",
+      affectedMarkets: [
+        { symbol: "wti", trend: "Neutral" },
+        { symbol: "btc", trend: "Neutral" }
+      ]
+    }
+  ];
+}
