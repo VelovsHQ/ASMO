@@ -1,13 +1,8 @@
 "use client";
 
-import { useInterests } from "@/hooks/useInterests";
+import { useInterests, MARKETS } from "@/hooks/useInterests";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-
-const OPTIONS = [
-  "Gold", "Oil", "Bitcoin", "NASDAQ", "AI Stocks", 
-  "Apple", "Microsoft", "Sri Lankan Stocks", "Forex", "Crypto"
-];
 
 export default function OnboardingPage() {
   const { interests, toggleInterest, isLoaded } = useInterests();
@@ -28,7 +23,7 @@ export default function OnboardingPage() {
         </p>
         
         <div className="flex flex-wrap justify-center gap-3 py-8">
-          {OPTIONS.map((option) => {
+          {MARKETS.map((option) => {
             const isSelected = interests.includes(option);
             return (
               <button

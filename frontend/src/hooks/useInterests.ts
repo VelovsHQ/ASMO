@@ -2,6 +2,11 @@
 
 import { useState, useEffect } from "react";
 
+export const MARKETS = [
+  "Gold", "Oil", "Bitcoin", "NASDAQ", "AI Stocks", 
+  "Apple", "Microsoft", "Sri Lankan Stocks", "Forex", "Crypto"
+];
+
 export function useInterests() {
   const [interests, setInterests] = useState<string[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
