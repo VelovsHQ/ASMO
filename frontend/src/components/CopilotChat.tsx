@@ -18,7 +18,7 @@ interface CopilotChatProps {
 
 export default function CopilotChat({ isFloating = false }: CopilotChatProps) {
   const [isOpen, setIsOpen] = useState(!isFloating);
-  const { messages, input, handleInputChange, handleSubmit, append, isLoading } = useChat();
+  const { messages, input = "", handleInputChange, handleSubmit, append, isLoading } = useChat();
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
