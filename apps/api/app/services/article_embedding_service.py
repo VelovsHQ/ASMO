@@ -22,7 +22,6 @@ class ArticleEmbeddingService:
         )
 
         db.add(record)
-
         db.flush()
 
         return record
@@ -36,5 +35,22 @@ class ArticleEmbeddingService:
         return db.scalar(
             select(ArticleEmbedding).where(
                 ArticleEmbedding.article_id == article_id
+            )
+        )
+
+    @staticmethod
+    def find_similar(
+        db: Session,
+        embedding: list[float],
+        limit: int = 5,
+    ):
+
+        return list(
+            db.scalars(
+                select(ArticleEmbedding)
+                .order_by(
+                    ArticleEmbedding.embedding.cosine_distance(embedding)
+                )
+                .limit(limit)
             )
         )
