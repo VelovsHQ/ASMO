@@ -164,6 +164,9 @@ export default function SettingsPage() {
                     console.log("Setting theme to dark");
                     setTheme("dark");
                     updateSettings({ theme: "dark" });
+                    document.documentElement.classList.remove("light");
+                    document.documentElement.classList.add("dark");
+                    document.documentElement.style.colorScheme = "dark";
                   }}
                   className={`px-4 py-2 rounded-md text-sm font-medium border transition-colors ${theme === "dark" ? "bg-accent text-accent-foreground border-accent shadow-sm" : "bg-muted text-muted-foreground border-transparent hover:text-foreground hover:bg-muted/80"}`}
                 >
@@ -174,6 +177,9 @@ export default function SettingsPage() {
                     console.log("Setting theme to light");
                     setTheme("light");
                     updateSettings({ theme: "light" });
+                    document.documentElement.classList.remove("dark");
+                    document.documentElement.classList.add("light");
+                    document.documentElement.style.colorScheme = "light";
                   }}
                   className={`px-4 py-2 rounded-md text-sm font-medium border transition-colors ${theme === "light" ? "bg-accent text-accent-foreground border-accent shadow-sm" : "bg-muted text-muted-foreground border-transparent hover:text-foreground hover:bg-muted/80"}`}
                 >
