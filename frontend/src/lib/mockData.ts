@@ -10,7 +10,28 @@ export interface MarketSignal {
   confidence: number; // 0-100
   risk: RiskLevel;
   momentum: MomentumLevel;
+  changePercent: number;
 }
+
+export const SEARCHABLE_MARKETS = [
+  { symbol: "xauusd", name: "Gold", category: "Commodities" },
+  { symbol: "wti", name: "Crude Oil", category: "Commodities" },
+  { symbol: "btc", name: "Bitcoin", category: "Crypto" },
+  { symbol: "eth", name: "Ethereum", category: "Crypto" },
+  { symbol: "sol", name: "Solana", category: "Crypto" },
+  { symbol: "total-crypto", name: "Total Crypto Market Cap", category: "Crypto" },
+  { symbol: "ndx", name: "NASDAQ 100", category: "Equities" },
+  { symbol: "spx", name: "S&P 500", category: "Equities" },
+  { symbol: "aapl", name: "Apple Inc.", category: "Equities" },
+  { symbol: "msft", name: "Microsoft", category: "Equities" },
+  { symbol: "nvda", name: "NVIDIA", category: "Equities" },
+  { symbol: "tsla", name: "Tesla", category: "Equities" },
+  { symbol: "ai-index", name: "AI Tech Index", category: "Equities" },
+  { symbol: "cse", name: "Colombo Stock Exchange", category: "Equities" },
+  { symbol: "eurusd", name: "EUR/USD", category: "Forex" },
+  { symbol: "gbpusd", name: "GBP/USD", category: "Forex" },
+  { symbol: "usdjpy", name: "USD/JPY", category: "Forex" }
+];
 
 const SYMBOL_MAP: Record<string, string> = {
   "Gold": "xauusd",
@@ -42,6 +63,7 @@ export function generateMockMarketSignal(name: string): MarketSignal {
     confidence: Math.floor(Math.random() * 40) + 60, // 60-100%
     risk: risks[Math.floor(Math.random() * risks.length)],
     momentum: momentums[Math.floor(Math.random() * momentums.length)],
+    changePercent: (Math.random() * 10) - 5, // -5.0 to +5.0
   };
 }
 
