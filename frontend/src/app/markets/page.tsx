@@ -42,6 +42,7 @@ export default function MarketsPage() {
             </div>
           </Link>
         ))}
+        </div>
       </section>
     </div>
   );
