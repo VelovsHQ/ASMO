@@ -5,6 +5,7 @@ import { getMockMarketDetail } from "@/lib/mockData";
 import MarketPulseScore from "@/components/MarketPulseScore";
 import EventTimeline from "@/components/EventTimeline";
 import MarketPredictionChart from "@/components/MarketPredictionChart";
+import AddToWatchlistButton from "@/components/AddToWatchlistButton";
 import { ChevronRight, ExternalLink, History, Lightbulb, Newspaper, Target } from "lucide-react";
 
 export default function MarketDetailPage({ params }: { params: Promise<{ symbol: string }> }) {
@@ -16,10 +17,16 @@ export default function MarketDetailPage({ params }: { params: Promise<{ symbol:
       
       {/* 1. Header & Pulse Score */}
       <section className="flex flex-col gap-6">
-        <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground uppercase">
-          {detail.name}
-        </h1>
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground uppercase">
+            {detail.name}
+          </h1>
+          <AddToWatchlistButton symbol={detail.symbol} />
+        </div>
         <div className="max-w-2xl">
+          <MarketPulseScore signal={detail} size="full" />
+        </div>
+      </section>
           <MarketPulseScore signal={detail} size="full" />
         </div>
       </section>
