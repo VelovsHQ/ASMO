@@ -9,6 +9,8 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@ai-sdk/anthropic": "^4.0.15",
+    "ai": "^7.0.28",
     "echarts": "^6.1.0",
     "echarts-for-react": "^3.0.6",
     "framer-motion": "^12.42.2",
