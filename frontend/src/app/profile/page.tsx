@@ -6,7 +6,8 @@ import { useInterests } from "@/hooks/useInterests";
 import { useWatchlists } from "@/hooks/useWatchlists";
 import { useAlerts } from "@/hooks/useAlerts";
 import Link from "next/link";
-import { Edit2, Bell, List, Settings, LogOut, Lock, Check, X, Target } from "lucide-react";
+import { Edit2, Bell, List, Settings, LogOut, Lock, Check, X, Target, Camera } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function ProfilePage() {
   const { profile, updateProfile, isLoaded: profileLoaded } = useProfile();
@@ -42,49 +43,94 @@ export default function ProfilePage() {
     <div className="p-6 md:p-10 flex flex-col gap-10 max-w-5xl mx-auto w-full pb-32">
       
       {/* 1. Header */}
-      <section className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 p-8 border border-border bg-muted/10 rounded-3xl">
-        <div className="flex items-center gap-6">
-          <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-accent flex items-center justify-center text-3xl font-bold uppercase text-accent-foreground border-4 border-background shadow-lg shrink-0">
-            {profile.avatar}
+      <section className="relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-6 p-8 border border-border bg-muted/10 rounded-3xl">
+        <div className="flex flex-col md:flex-row items-start md:items-center gap-6 w-full">
+          {/* Avatar */}
+          <div className="relative group cursor-pointer shrink-0">
+            {/* Glow / Gradient Ring */}
+            <div className="absolute inset-[-4px] rounded-full bg-gradient-to-br from-accent/40 via-accent/10 to-transparent opacity-70 group-hover:opacity-100 transition-opacity duration-300 blur-sm" />
+            <div className="relative w-20 h-20 md:w-24 md:h-24 rounded-full bg-background flex items-center justify-center text-3xl font-bold uppercase text-foreground border border-border shadow-lg z-10 overflow-hidden">
+              <div className="absolute inset-0 bg-accent/5 group-hover:bg-accent/10 transition-colors" />
+              {profile.avatar}
+            </div>
+            {/* Camera Overlay */}
+            <div className="absolute bottom-0 right-0 z-20 w-8 h-8 bg-background border border-border rounded-full flex items-center justify-center text-muted-foreground shadow-sm group-hover:text-accent group-hover:border-accent transition-colors">
+              <Camera size={14} />
+            </div>
           </div>
-          {isEditing ? (
-            <div className="flex flex-col gap-3 w-full md:w-auto">
-              <input 
-                type="text" 
-                value={editName}
-                onChange={e => setEditName(e.target.value)}
-                className="bg-background border border-border rounded-md px-3 py-1.5 text-lg font-bold focus:outline-none focus:border-accent w-full md:w-64"
-                placeholder="Full Name"
-              />
-              <input 
-                type="email" 
-                value={editEmail}
-                onChange={e => setEditEmail(e.target.value)}
-                className="bg-background border border-border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-accent w-full md:w-64"
-                placeholder="Email Address"
-              />
-              <div className="flex gap-2 mt-1">
-                <button onClick={handleEditSave} className="bg-accent text-accent-foreground px-4 py-1.5 rounded-md text-sm font-bold hover:bg-accent/90 transition-colors flex items-center gap-1.5">
-                  <Check size={16} /> Save
-                </button>
-                <button onClick={() => setIsEditing(false)} className="bg-background border border-border text-foreground px-4 py-1.5 rounded-md text-sm font-semibold hover:bg-muted transition-colors flex items-center gap-1.5">
-                  <X size={16} /> Cancel
-                </button>
-              </div>
-            </div>
-          ) : (
-            <div className="flex flex-col gap-1">
-              <h1 className="text-3xl font-bold text-foreground">{profile.name}</h1>
-              <p className="text-muted-foreground">{profile.email}</p>
-              <p className="text-xs text-muted-foreground/70 font-bold uppercase tracking-wider mt-2">Member since {profile.memberSince}</p>
-            </div>
-          )}
+
+          <div className="w-full relative min-h-[90px] flex items-center">
+            <AnimatePresence mode="wait">
+              {isEditing ? (
+                <motion.div 
+                  key="edit"
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -10 }}
+                  transition={{ duration: 0.2 }}
+                  className="flex flex-col gap-4 w-full max-w-md bg-background border border-border p-5 rounded-2xl shadow-sm"
+                >
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Full Name</label>
+                    <input 
+                      type="text" 
+                      value={editName}
+                      onChange={e => setEditName(e.target.value)}
+                      className="bg-muted/30 border border-border rounded-lg px-3 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all"
+                      placeholder="e.g. John Doe"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Email Address</label>
+                    <input 
+                      type="email" 
+                      value={editEmail}
+                      onChange={e => setEditEmail(e.target.value)}
+                      className="bg-muted/30 border border-border rounded-lg px-3 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all"
+                      placeholder="e.g. john@example.com"
+                    />
+                  </div>
+                  <div className="flex gap-2 mt-2 pt-4 border-t border-border/50">
+                    <button onClick={handleEditSave} className="bg-accent text-accent-foreground px-5 py-2 rounded-lg text-sm font-bold hover:bg-accent/90 transition-colors flex items-center justify-center gap-1.5 flex-1">
+                      <Check size={16} /> Save Changes
+                    </button>
+                    <button onClick={() => setIsEditing(false)} className="bg-transparent border border-border text-foreground px-5 py-2 rounded-lg text-sm font-semibold hover:bg-muted transition-colors flex items-center justify-center gap-1.5 flex-1">
+                      <X size={16} /> Cancel
+                    </button>
+                  </div>
+                </motion.div>
+              ) : (
+                <motion.div 
+                  key="view"
+                  initial={{ opacity: 0, x: 10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 10 }}
+                  transition={{ duration: 0.2 }}
+                  className="flex flex-col gap-1"
+                >
+                  <h1 className="text-3xl font-bold text-foreground tracking-tight">{profile.name}</h1>
+                  <p className="text-muted-foreground font-medium">{profile.email}</p>
+                  <p className="text-xs text-muted-foreground/70 font-bold uppercase tracking-wider mt-2">Member since {profile.memberSince}</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
-        {!isEditing && (
-          <button onClick={handleEditOpen} className="flex items-center gap-2 bg-background border border-border hover:bg-muted text-foreground px-4 py-2 rounded-lg text-sm font-semibold transition-colors shadow-sm w-full md:w-auto justify-center">
-            <Edit2 size={16} /> Edit Profile
-          </button>
-        )}
+        
+        <AnimatePresence>
+          {!isEditing && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="w-full md:w-auto shrink-0"
+            >
+              <button onClick={handleEditOpen} className="flex items-center gap-2 bg-background border border-border hover:bg-muted text-foreground px-4 py-2 rounded-lg text-sm font-semibold transition-colors shadow-sm w-full md:w-auto justify-center">
+                <Edit2 size={16} /> Edit Profile
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </section>
 
       {/* 2. At a Glance Stats */}
