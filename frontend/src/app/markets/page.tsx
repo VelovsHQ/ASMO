@@ -2,6 +2,7 @@
 
 import { generateMockMarketSignal } from "@/lib/mockData";
 import MarketPulseScore from "@/components/MarketPulseScore";
+import Heatmap from "@/components/Heatmap";
 import Link from "next/link";
 import { useMemo } from "react";
 
@@ -25,8 +26,15 @@ export default function MarketsPage() {
           Browse and monitor live signals across all available markets.
         </p>
       </section>
+      <section>
+        <Heatmap />
+      </section>
 
-      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      <div className="h-px bg-border/50 w-full" />
+
+      <section className="flex flex-col gap-6">
+        <h2 className="text-2xl font-bold tracking-tight">Market Directory</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {signals.map((signal) => (
           <Link key={signal.symbol} href={`/markets/${signal.symbol}`} className="block h-full group">
             <div className="h-full transition-transform duration-200 group-hover:-translate-y-1">
