@@ -6,6 +6,8 @@ import NotificationDropdown from "@/components/NotificationDropdown";
 import GlobalSearch from "@/components/GlobalSearch";
 import SidebarSearchButton from "@/components/SidebarSearchButton";
 
+import Image from "next/image";
+
 export default function AppLayout({
   children,
 }: {
@@ -16,9 +18,20 @@ export default function AppLayout({
       {/* Left Sidebar Nav */}
       <aside className="w-64 border-r border-border bg-muted/30 flex flex-col h-full shrink-0">
         <div className="p-6">
-          <h2 className="text-2xl font-bold tracking-tight">
-            <Link href="/">ASMO</Link>
-          </h2>
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="relative shrink-0">
+              <div className="absolute inset-0 bg-accent/20 blur-[12px] rounded-full scale-110 transition-all duration-500 group-hover:bg-accent/30" />
+              <Image 
+                src="/asmo-logo.png" 
+                alt="ASMO Logo" 
+                width={32} 
+                height={32} 
+                className="relative z-10 object-contain drop-shadow-md" 
+                priority
+              />
+            </div>
+            <h2 className="text-xl font-bold tracking-tight text-foreground">ASMO</h2>
+          </Link>
         </div>
         <nav className="flex-1 px-4 space-y-2 overflow-y-auto">
           <NavItem href="/dashboard" icon={<LayoutDashboard size={20} />} label="Dashboard" />

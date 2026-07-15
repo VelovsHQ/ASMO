@@ -7,6 +7,8 @@ import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useInterests } from "@/hooks/useInterests";
 
+import Image from "next/image";
+
 export default function LoginPage() {
   const router = useRouter();
   const { login } = useAuth();
@@ -74,7 +76,17 @@ export default function LoginPage() {
         {/* Logo */}
         <div className="flex justify-center">
           <Link href="/">
-            <h1 className="text-3xl font-bold tracking-tight text-foreground">ASMO</h1>
+            <div className="relative group">
+              <div className="absolute inset-0 bg-accent/20 blur-[24px] rounded-full scale-110 transition-all duration-500 group-hover:bg-accent/30" />
+              <Image 
+                src="/asmo-logo.png" 
+                alt="ASMO Logo" 
+                width={72} 
+                height={72} 
+                className="relative z-10 object-contain drop-shadow-xl" 
+                priority
+              />
+            </div>
           </Link>
         </div>
         
