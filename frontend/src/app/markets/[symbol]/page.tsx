@@ -27,9 +27,6 @@ export default function MarketDetailPage({ params }: { params: Promise<{ symbol:
           <MarketPulseScore signal={detail} size="full" />
         </div>
       </section>
-          <MarketPulseScore signal={detail} size="full" />
-        </div>
-      </section>
 
       {/* 2. AI Summary */}
       <section className="flex flex-col gap-4">
