@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { LayoutDashboard, LineChart, Newspaper, List, Bell, Search, Settings, MessageSquare } from "lucide-react";
 import Link from "next/link";
+import SignupPrompt from "@/components/SignupPrompt";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -73,6 +74,8 @@ export default function RootLayout({
               <MessageSquare size={24} />
             </button>
           </div>
+
+          <SignupPrompt />
         </main>
       </body>
     </html>
