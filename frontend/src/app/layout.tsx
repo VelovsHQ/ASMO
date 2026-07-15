@@ -8,6 +8,7 @@ import CopilotChat from "@/components/CopilotChat";
 import NotificationDropdown from "@/components/NotificationDropdown";
 import GlobalSearch from "@/components/GlobalSearch";
 import SidebarSearchButton from "@/components/SidebarSearchButton";
+import ThemeProvider from "@/components/ThemeProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,7 +36,8 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
     >
-      <body className="min-h-full flex h-screen overflow-hidden bg-background text-foreground">
+      <body className="min-h-full flex h-screen overflow-hidden bg-background text-foreground transition-colors duration-300">
+        <ThemeProvider />
         {/* Left Sidebar Nav */}
         <aside className="w-64 border-r border-border bg-muted/30 flex flex-col h-full">
           <div className="p-6">
