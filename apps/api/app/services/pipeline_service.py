@@ -10,6 +10,8 @@ from app.services.ai_service import (
 from app.services.analysis_service import AnalysisService
 from app.services.article_service import ArticleService
 from app.services.prediction_service import PredictionService
+from app.services.embedding_service import EmbeddingService
+from app.services.article_embedding_service import ArticleEmbeddingService
 
 
 class PipelineService:
@@ -49,6 +51,15 @@ class PipelineService:
                 )
             )
 
+            print("\n" + "=" * 60)
+            print("RAG RETRIEVAL")
+            print("=" * 60)
+
+            for historical_article in historical_articles:
+                print(f"Article #{historical_article.id}")
+                print(historical_article.title)
+                print("-" * 60)
+
             history = "\n\n".join(
                 f"""
 Title:
@@ -59,6 +70,8 @@ Content:
 """
                 for item in historical_articles
             )
+
+            print("\nHistory Length:", len(history))
 
             # AI Analysis
             analysis_result = analyze_article(
