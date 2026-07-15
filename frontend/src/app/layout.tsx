@@ -6,6 +6,7 @@ import Link from "next/link";
 import SignupPrompt from "@/components/SignupPrompt";
 import CopilotChat from "@/components/CopilotChat";
 import NotificationDropdown from "@/components/NotificationDropdown";
+import GlobalSearch from "@/components/GlobalSearch";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -69,7 +70,8 @@ export default function RootLayout({
         {/* Main Content Area */}
         <main className="flex-1 relative h-full overflow-y-auto">
           {/* Global Top Nav Elements */}
-          <div className="absolute top-6 right-6 z-40 flex items-center gap-2">
+          <div className="absolute top-6 right-6 z-40 flex items-center gap-3">
+            <GlobalSearch />
             <NotificationDropdown />
           </div>
 
