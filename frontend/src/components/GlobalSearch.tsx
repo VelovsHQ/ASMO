@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useMemo } from "react";
+import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import { Search, X, TrendingUp, TrendingDown, Minus } from "lucide-react";
 import { generateMockMarketSignal } from "@/lib/mockData";
@@ -44,8 +45,13 @@ export default function GlobalSearch() {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [mounted, setMounted] = useState(false);
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Keyboard shortcut (Cmd/Ctrl + K)
   useEffect(() => {
@@ -64,9 +70,6 @@ export default function GlobalSearch() {
       setQuery("");
       setSelectedIndex(0);
       setTimeout(() => inputRef.current?.focus(), 100);
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
     }
   }, [isOpen]);
 
@@ -135,7 +138,7 @@ export default function GlobalSearch() {
   return (
     <>
       <button 
-        onClick={() => setIsOpen(true)}
+        onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIsOpen(true); }}
         className="flex items-center gap-2 p-2 sm:px-4 sm:py-2 text-muted-foreground bg-muted/50 hover:bg-muted hover:text-foreground transition-colors rounded-full sm:rounded-md border border-border focus:outline-none"
       >
         <Search size={18} />
@@ -145,9 +148,10 @@ export default function GlobalSearch() {
         </kbd>
       </button>
 
-      <AnimatePresence>
-        {isOpen && (
-          <div className="fixed inset-0 z-50 flex items-start justify-center pt-[10vh] sm:pt-[15vh]">
+      {mounted && createPortal(
+        <AnimatePresence>
+          {isOpen && (
+            <div className="fixed inset-0 z-[100] flex items-start justify-center pt-[10vh] sm:pt-[15vh]">
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -254,8 +258,10 @@ export default function GlobalSearch() {
               </div>
             </motion.div>
           </div>
-        )}
-      </AnimatePresence>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
     </>
   );
 }
