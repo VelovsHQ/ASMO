@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { useChat } from "ai/react";
+import { useChat } from "@ai-sdk/react";
 import { MessageSquare, X, Send, Sparkles, User } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -33,7 +33,7 @@ export default function CopilotChat({ isFloating = false }: CopilotChatProps) {
 
   const ChatInterface = (
     <div className={`flex flex-col bg-background border border-border shadow-2xl overflow-hidden ${isFloating ? "w-[90vw] sm:w-[400px] h-[500px] sm:h-[600px] rounded-2xl" : "w-full h-full rounded-2xl"}`}>
-      
+
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-border bg-muted/20">
         <div className="flex items-center gap-2">
@@ -136,14 +136,14 @@ export default function CopilotChat({ isFloating = false }: CopilotChatProps) {
   return (
     <>
       <div className="fixed bottom-6 right-6 z-50">
-        <button 
+        <button
           onClick={() => setIsOpen(!isOpen)}
           className="w-14 h-14 rounded-full bg-accent text-accent-foreground shadow-xl shadow-accent/20 flex items-center justify-center hover:bg-accent/90 transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background cursor-pointer"
         >
           {isOpen ? <X size={24} /> : <MessageSquare size={24} />}
         </button>
       </div>
-      
+
       <AnimatePresence>
         {isOpen && (
           <motion.div
