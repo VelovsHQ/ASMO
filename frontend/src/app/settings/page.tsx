@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useSettings } from "@/hooks/useSettings";
 import { useProfile } from "@/hooks/useProfile";
 import { useInterests, MARKETS } from "@/hooks/useInterests";
+import { useTheme } from "next-themes";
 import { User, Bell, Palette, Shield, Info, Trash2, Target } from "lucide-react";
 import Link from "next/link";
 
@@ -28,6 +29,7 @@ export default function SettingsPage() {
   const { settings, updateSettings, isLoaded: settingsLoaded } = useSettings();
   const { interests, toggleInterest, isLoaded: interestsLoaded } = useInterests();
   const { profile, isLoaded: profileLoaded } = useProfile();
+  const { theme, setTheme } = useTheme();
 
   const [showClearConfirm, setShowClearConfirm] = useState(false);
 
@@ -153,19 +155,27 @@ export default function SettingsPage() {
             <Palette className="text-accent" size={24} /> Appearance
           </h2>
           <div className="p-6 border border-border bg-background rounded-2xl flex flex-col gap-8">
-            <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-3">
               <span className="font-semibold text-foreground text-sm">Theme</span>
               <p className="text-xs text-muted-foreground mb-1">Light mode is currently a work in progress. Dark mode is recommended.</p>
               <div className="flex gap-2">
                 <button 
-                  onClick={() => updateSettings({ theme: "dark" })}
-                  className={`px-4 py-2 rounded-md text-sm font-medium border transition-colors ${settings.theme === "dark" ? "bg-accent text-accent-foreground border-accent shadow-sm" : "bg-muted text-muted-foreground border-transparent hover:text-foreground hover:bg-muted/80"}`}
+                  onClick={() => {
+                    console.log("Setting theme to dark");
+                    setTheme("dark");
+                    updateSettings({ theme: "dark" });
+                  }}
+                  className={`px-4 py-2 rounded-md text-sm font-medium border transition-colors ${theme === "dark" ? "bg-accent text-accent-foreground border-accent shadow-sm" : "bg-muted text-muted-foreground border-transparent hover:text-foreground hover:bg-muted/80"}`}
                 >
                   Dark Mode
                 </button>
                 <button 
-                  onClick={() => updateSettings({ theme: "light" })}
-                  className={`px-4 py-2 rounded-md text-sm font-medium border transition-colors ${settings.theme === "light" ? "bg-accent text-accent-foreground border-accent shadow-sm" : "bg-muted text-muted-foreground border-transparent hover:text-foreground hover:bg-muted/80"}`}
+                  onClick={() => {
+                    console.log("Setting theme to light");
+                    setTheme("light");
+                    updateSettings({ theme: "light" });
+                  }}
+                  className={`px-4 py-2 rounded-md text-sm font-medium border transition-colors ${theme === "light" ? "bg-accent text-accent-foreground border-accent shadow-sm" : "bg-muted text-muted-foreground border-transparent hover:text-foreground hover:bg-muted/80"}`}
                 >
                   Light Mode
                 </button>

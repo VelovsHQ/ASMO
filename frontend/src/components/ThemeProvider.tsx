@@ -1,20 +1,11 @@
 "use client";
 
-import { useEffect } from "react";
-import { useSettings } from "@/hooks/useSettings";
+import * as React from "react";
+import { ThemeProvider as NextThemesProvider } from "next-themes";
 
-export default function ThemeProvider() {
-  const { settings, isLoaded } = useSettings();
-
-  useEffect(() => {
-    if (isLoaded) {
-      if (settings.theme === "dark") {
-        document.documentElement.classList.add("dark");
-      } else {
-        document.documentElement.classList.remove("dark");
-      }
-    }
-  }, [settings.theme, isLoaded]);
-
-  return null;
+export default function ThemeProvider({
+  children,
+  ...props
+}: React.ComponentProps<typeof NextThemesProvider>) {
+  return <NextThemesProvider {...props}>{children}</NextThemesProvider>;
 }
