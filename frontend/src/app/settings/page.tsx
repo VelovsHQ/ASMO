@@ -165,7 +165,7 @@ export default function SettingsPage() {
                     setTheme("dark");
                     updateSettings({ theme: "dark" });
                   }}
-                  className={`px-4 py-2 rounded-md text-sm font-medium border transition-colors ${theme === "dark" ? "bg-accent text-accent-foreground border-accent shadow-sm" : "bg-muted text-muted-foreground border-transparent hover:text-foreground hover:bg-muted/80"}`}
+                  className={`px-4 py-2 rounded-md text-sm font-medium border transition-colors ${theme === "dark" ? "bg-accent text-accent-foreground border-transparent shadow-sm" : "bg-muted text-muted-foreground border-transparent hover:text-foreground hover:bg-muted/80"}`}
                 >
                   Dark Mode
                 </button>
@@ -175,7 +175,7 @@ export default function SettingsPage() {
                     setTheme("light");
                     updateSettings({ theme: "light" });
                   }}
-                  className={`px-4 py-2 rounded-md text-sm font-medium border transition-colors ${theme === "light" ? "bg-accent text-accent-foreground border-accent shadow-sm" : "bg-muted text-muted-foreground border-transparent hover:text-foreground hover:bg-muted/80"}`}
+                  className={`px-4 py-2 rounded-md text-sm font-medium border transition-colors ${theme === "light" ? "bg-accent text-accent-foreground border-transparent shadow-sm" : "bg-muted text-muted-foreground border-transparent hover:text-foreground hover:bg-muted/80"}`}
                 >
                   Light Mode
                 </button>
@@ -187,13 +187,13 @@ export default function SettingsPage() {
               <div className="flex gap-2">
                 <button 
                   onClick={() => updateSettings({ density: "comfortable" })}
-                  className={`px-4 py-2 rounded-md text-sm font-medium border transition-colors ${settings.density === "comfortable" ? "bg-accent text-accent-foreground border-accent shadow-sm" : "bg-muted text-muted-foreground border-transparent hover:text-foreground hover:bg-muted/80"}`}
+                  className={`px-4 py-2 rounded-md text-sm font-medium border transition-colors ${settings.density === "comfortable" ? "bg-accent text-accent-foreground border-transparent shadow-sm" : "bg-muted text-muted-foreground border-transparent hover:text-foreground hover:bg-muted/80"}`}
                 >
                   Comfortable
                 </button>
                 <button 
                   onClick={() => updateSettings({ density: "compact" })}
-                  className={`px-4 py-2 rounded-md text-sm font-medium border transition-colors ${settings.density === "compact" ? "bg-accent text-accent-foreground border-accent shadow-sm" : "bg-muted text-muted-foreground border-transparent hover:text-foreground hover:bg-muted/80"}`}
+                  className={`px-4 py-2 rounded-md text-sm font-medium border transition-colors ${settings.density === "compact" ? "bg-accent text-accent-foreground border-transparent shadow-sm" : "bg-muted text-muted-foreground border-transparent hover:text-foreground hover:bg-muted/80"}`}
                 >
                   Compact
                 </button>
