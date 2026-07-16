@@ -160,9 +160,9 @@ export function getMockMarketDetail(symbol: string): MarketDetail {
   const decodedSymbol = decodeURIComponent(symbol).toUpperCase();
   // Reverse lookup name from symbol map, or just use symbol as name
   const name = Object.keys(SYMBOL_MAP).find(key => SYMBOL_MAP[key] === decodedSymbol.toLowerCase()) || decodedSymbol;
-  
+
   const signal = generateMockMarketSignal(name);
-  
+
   return {
     ...signal,
     summary: [
@@ -183,13 +183,13 @@ export function getMockMarketDetail(symbol: string): MarketDetail {
     ],
     predictions: [
       {
-        timeframe: "24h", direction: "up", data: Array.from({length: 24}, (_, i) => ({ time: `${i}:00`, value: 100 + Math.random() * 10 + i * 0.5 }))
+        timeframe: "24h", direction: "up", data: Array.from({ length: 24 }, (_, i) => ({ time: `${i}:00`, value: 100 + Math.random() * 10 + i * 0.5 }))
       },
       {
-        timeframe: "7d", direction: "up", data: Array.from({length: 7}, (_, i) => ({ time: `Day ${i+1}`, value: 100 + Math.random() * 20 + i * 2 }))
+        timeframe: "7d", direction: "up", data: Array.from({ length: 7 }, (_, i) => ({ time: `Day ${i + 1}`, value: 100 + Math.random() * 20 + i * 2 }))
       },
       {
-        timeframe: "30d", direction: "neutral", data: Array.from({length: 30}, (_, i) => ({ time: `Day ${i+1}`, value: 100 + Math.sin(i/3)*10 + Math.random()*5 }))
+        timeframe: "30d", direction: "neutral", data: Array.from({ length: 30 }, (_, i) => ({ time: `Day ${i + 1}`, value: 100 + Math.sin(i / 3) * 10 + Math.random() * 5 }))
       }
     ],
     articles: [
