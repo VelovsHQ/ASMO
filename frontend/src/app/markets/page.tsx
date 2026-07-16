@@ -5,6 +5,7 @@ import MarketPulseScore from "@/components/MarketPulseScore";
 import Heatmap from "@/components/Heatmap";
 import Link from "next/link";
 import { useMemo } from "react";
+import { Newspaper } from "lucide-react";
 
 const ALL_MARKETS = [
   "Gold", "Oil", "Bitcoin", "NASDAQ", "AI Stocks", 
@@ -19,9 +20,15 @@ export default function MarketsPage() {
   return (
     <div className="p-6 md:p-10 flex flex-col gap-8 max-w-7xl mx-auto w-full pb-32">
       <section className="flex flex-col gap-4">
-        <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">
-          All Markets
-        </h1>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">
+            All Markets
+          </h1>
+          <Link href="/digest" className="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium border border-border rounded-md hover:bg-muted/50 transition-colors w-full sm:w-auto whitespace-nowrap">
+            <Newspaper className="w-4 h-4" />
+            Today's Summary
+          </Link>
+        </div>
         <p className="text-muted-foreground">
           Browse and monitor live signals across all available markets.
         </p>
