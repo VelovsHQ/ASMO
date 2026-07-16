@@ -151,9 +151,6 @@ export default function GlobalSearch() {
       >
         <Search size={18} />
         <span className="hidden sm:inline text-sm font-medium">Search markets...</span>
-        <kbd className="hidden sm:inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] uppercase bg-background border border-border rounded font-sans font-medium text-muted-foreground ml-4">
-          <span className="text-xs">⌘</span>K
-        </kbd>
       </button>
 
       {mounted && createPortal(
