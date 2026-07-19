@@ -1,29 +1,47 @@
+# Database
+SQLAlchemy==2.0.51
 alembic==1.18.5
-annotated-types==0.7.0
-Mako==1.3.12
-MarkupSafe==3.0.3
 pgvector==0.5.0
-psycopg==3.3.4
-psycopg-binary==3.3.4
+psycopg[binary]==3.3.4
+
+# Validation / Config
 pydantic==2.13.4
 pydantic-settings==2.14.2
-pydantic_core==2.46.4
 python-dotenv==1.2.2
-SQLAlchemy==2.0.51
+annotated-types==0.7.0
+pydantic_core==2.46.4
+typing-extensions==4.16.0
 typing-inspection==0.4.2
-typing_extensions==4.16.0
-fastapi
+
+# FastAPI
+fastapi[standard]
 uvicorn[standard]
+
+# Cache / Queue
 redis
 celery
+
+# Authentication
+python-jose[cryptography]
+passlib[bcrypt]
+
+# HTTP / APIs
+httpx
+
+# AI / Agents
 langgraph
 langchain
 langchain-google-genai
-python-jose[cryptography]
-passlib[bcrypt]
-httpx
+openai
+
+# Data Collection
 firecrawl-py
 feedparser
 playwright
+
+# Monitoring
 sentry-sdk
-openai
+
+# Templates
+Mako==1.3.12
+MarkupSafe==3.0.3
