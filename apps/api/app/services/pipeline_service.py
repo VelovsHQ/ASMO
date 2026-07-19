@@ -14,6 +14,7 @@ from app.services.history_service import HistoryService
 from app.agents.historical_memory_agent import HistoricalMemoryAgent
 from app.agents.confidence_review_agent import ConfidenceReviewAgent
 from app.agents.portfolio_impact_agent import PortfolioImpactAgent
+from app.agents.alert_agent import AlertAgent
 
 
 class PipelineService:
@@ -138,6 +139,12 @@ class PipelineService:
             )
 
             print(portfolio_actions)
+            alert = AlertAgent.run(
+                review,
+                portfolio_actions,
+            )
+
+            print(alert)
             article_id = article.id
             analysis_id = analysis.id
             prediction_count = len(created_predictions)
