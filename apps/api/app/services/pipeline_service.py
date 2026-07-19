@@ -3,10 +3,8 @@ from sqlalchemy import select
 from app.db.session import SessionLocal
 from app.models.market import Market
 
-from app.services.ai_service import (
-    analyze_article,
-    predict_markets,
-)
+from app.services.ai_service import predict_markets
+from app.agents.event_analysis_agent import EventAnalysisAgent
 from app.services.analysis_service import AnalysisService
 from app.services.article_service import ArticleService
 from app.services.prediction_service import PredictionService
@@ -77,7 +75,7 @@ class PipelineService:
             print("\nHistory Length:", len(history))
 
             # AI Analysis
-            analysis_result = analyze_article(
+            analysis_result = EventAnalysisAgent.run(
                 article.title,
                 article.content,
                 history,
