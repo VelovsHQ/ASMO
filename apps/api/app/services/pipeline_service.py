@@ -13,6 +13,7 @@ from app.services.article_embedding_service import ArticleEmbeddingService
 from app.services.history_service import HistoryService
 from app.agents.historical_memory_agent import HistoricalMemoryAgent
 from app.agents.confidence_review_agent import ConfidenceReviewAgent
+from app.agents.portfolio_impact_agent import PortfolioImpactAgent
 
 
 class PipelineService:
@@ -131,6 +132,12 @@ class PipelineService:
             )
 
             print(review)
+
+            portfolio_actions = PortfolioImpactAgent.run(
+                created_predictions,
+            )
+
+            print(portfolio_actions)
             article_id = article.id
             analysis_id = analysis.id
             prediction_count = len(created_predictions)
