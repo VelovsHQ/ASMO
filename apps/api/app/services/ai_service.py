@@ -101,7 +101,10 @@ def analyze_article(
             },
             {
                 "role": "user",
-                "content": f"""Current Article
+                "content": f"""
+==================================================
+CURRENT ARTICLE
+==================================================
 
 Title:
 {title}
@@ -109,15 +112,28 @@ Title:
 Content:
 {content}
 
-----------------------------------
-
-Relevant Historical Articles
+==================================================
+HISTORICAL MARKET CASES
+==================================================
 
 {history}
 
-----------------------------------
+==================================================
 
-Analyze the current article while considering the historical context above.""",
+Use the historical cases as reference only.
+
+Do not copy previous predictions.
+
+Instead:
+
+1. Compare similarities.
+
+2. Identify differences.
+
+3. Explain whether the current article is likely to produce similar market reactions.
+
+4. Produce an independent prediction.
+""",
             },
         ],
     )

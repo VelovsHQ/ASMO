@@ -12,6 +12,7 @@ from app.services.article_service import ArticleService
 from app.services.prediction_service import PredictionService
 from app.services.embedding_service import EmbeddingService
 from app.services.article_embedding_service import ArticleEmbeddingService
+from app.services.history_service import HistoryService
 
 
 class PipelineService:
@@ -60,16 +61,18 @@ class PipelineService:
                 print(historical_article.title)
                 print("-" * 60)
 
-            history = "\n\n".join(
-                f"""
-Title:
-{item.title}
-
-Content:
-{item.content[:1200]}
-"""
-                for item in historical_articles
+            cases = HistoryService.build_cases(
+                db=db,
+                articles=historical_articles,
             )
+
+            history = HistoryService.build_context(cases)
+
+            print("\n")
+            print("=" * 60)
+            print("HISTORICAL CASES")
+            print("=" * 60)
+            print(history[:2500])
 
             print("\nHistory Length:", len(history))
 
