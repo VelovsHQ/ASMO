@@ -3,7 +3,7 @@ from sqlalchemy import select
 from app.db.session import SessionLocal
 from app.models.market import Market
 
-from app.services.ai_service import predict_markets
+from app.agents.market_prediction_agent import MarketPredictionAgent
 from app.agents.event_analysis_agent import EventAnalysisAgent
 from app.services.analysis_service import AnalysisService
 from app.services.article_service import ArticleService
@@ -92,7 +92,7 @@ class PipelineService:
             )
 
             # Market Predictions
-            prediction_result = predict_markets(
+            prediction_result = MarketPredictionAgent.run(
                 article.title,
                 article.content,
             )
