@@ -9,6 +9,7 @@ from app.graph.nodes.retrieve_history import retrieve_history
 from app.graph.nodes.process_article import process_article
 from app.graph.nodes.check_article import check_article
 from app.graph.nodes.skip_article import skip_article
+from app.graph.nodes.event_analysis import event_analysis
 
 builder = StateGraph(PipelineState)
 
@@ -40,6 +41,11 @@ builder.add_node(
 builder.add_node(
     "process_article",
     process_article,
+)
+
+builder.add_node(
+    "event_analysis",
+    event_analysis,
 )
 
 builder.add_edge(
@@ -75,9 +81,14 @@ builder.add_conditional_edges(
     "check_article",
     route_article,
     {
-        "process": "process_article",
+        "process": "event_analysis",
         "skip": "skip_article",
     },
+)
+
+builder.add_edge(
+    "event_analysis",
+    "process_article",
 )
 
 builder.add_edge(
