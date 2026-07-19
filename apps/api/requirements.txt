@@ -24,6 +24,7 @@ celery
 # Authentication
 python-jose[cryptography]
 passlib[bcrypt]
+email-validator
 
 # HTTP / APIs
 httpx

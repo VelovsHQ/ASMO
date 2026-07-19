@@ -2,6 +2,8 @@ from fastapi import FastAPI
 from app.api.v1.router import api_router
 from contextlib import asynccontextmanager
 from app.util.init_db import create_tables
+from app.routers.auth import authRouter
+
 
 @asynccontextmanager
 async def lifespan(app : FastAPI):
@@ -15,6 +17,8 @@ app = FastAPI(
     version="1.0.0",
     lifespan=lifespan
 )
+app.include_router(router=authRouter , tags=["auth"] , prefix="/auth")
+# i gave this beacuse /auth/login
 
 app.include_router(
     api_router,
