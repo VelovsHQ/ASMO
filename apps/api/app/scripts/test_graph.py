@@ -3,7 +3,7 @@ from app.graph.workflow import graph
 result = graph.invoke(
 
     {
-        "article_id": 2,
+        "article_id": 1,
     }
 
 )

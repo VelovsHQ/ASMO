@@ -11,6 +11,7 @@ from app.services.prediction_service import PredictionService
 from app.services.embedding_service import EmbeddingService
 from app.services.article_embedding_service import ArticleEmbeddingService
 from app.services.history_service import HistoryService
+from app.agents.historical_memory_agent import HistoricalMemoryAgent
 
 
 class PipelineService:
@@ -59,12 +60,10 @@ class PipelineService:
                 print(historical_article.title)
                 print("-" * 60)
 
-            cases = HistoryService.build_cases(
+            history = HistoricalMemoryAgent.run(
                 db=db,
                 articles=historical_articles,
             )
-
-            history = HistoryService.build_context(cases)
 
             print("\n")
             print("=" * 60)
