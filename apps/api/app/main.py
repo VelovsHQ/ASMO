@@ -1,8 +1,10 @@
-from fastapi import FastAPI
+from fastapi import FastAPI , Depends
 from app.api.v1.router import api_router
 from contextlib import asynccontextmanager
 from app.util.init_db import create_tables
 from app.routers.auth import authRouter
+from app.util.protectRoute import get_current_user
+from app.db.schema.user import UserOutput
 
 
 @asynccontextmanager
@@ -35,3 +37,7 @@ def root():
 @app.get("/health")
 def health_check():
     return {"status" : "Running SMOOTH"}
+
+@app.get("/protected")
+def read_protected(user : UserOutput = Depends(get_current_user)):
+    return {"data" : user}

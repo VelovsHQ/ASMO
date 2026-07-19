@@ -23,8 +23,13 @@ celery
 
 # Authentication
 python-jose[cryptography]
+PyJWT
 passlib[bcrypt]
+bcrypt
+python-decouple
 email-validator
+python-multipart
+
 
 # HTTP / APIs
 httpx
