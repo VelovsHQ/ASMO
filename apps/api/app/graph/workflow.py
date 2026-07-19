@@ -11,6 +11,7 @@ from app.graph.nodes.check_article import check_article
 from app.graph.nodes.skip_article import skip_article
 from app.graph.nodes.event_analysis import event_analysis
 from app.graph.nodes.historical_memory import historical_memory
+from app.graph.nodes.save_analysis import save_analysis
 
 builder = StateGraph(PipelineState)
 
@@ -52,6 +53,11 @@ builder.add_node(
 builder.add_node(
     "historical_memory",
     historical_memory,
+)
+
+builder.add_node(
+    "save_analysis",
+    save_analysis,
 )
 
 builder.add_edge(

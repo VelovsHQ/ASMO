@@ -1,3 +1,4 @@
+from app.services.history_service import HistoryService
 class HistoricalMemoryAgent:
 
     @staticmethod

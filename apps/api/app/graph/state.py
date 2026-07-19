@@ -17,5 +17,6 @@ class PipelineState(TypedDict):
     history: str
 
     analysis: dict
+    analysis_model: Any
 
     predictions: list
