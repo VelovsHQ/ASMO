@@ -1,5 +1,7 @@
 def check_article(state):
 
-    print("✅ Article Passed Checks")
+    article = state["article"]
+
+    print(f"\n🔍 Checking Article #{article.id}")
 
     return state
