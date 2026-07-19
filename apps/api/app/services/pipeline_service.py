@@ -22,7 +22,7 @@ class PipelineService:
     @staticmethod
     def process_article(
         article_id: int,
-        analysis_result: dict | None = None,
+        analysis,
         history: str | None = None,
     ):
 
@@ -84,24 +84,7 @@ class PipelineService:
 
                 print("\nHistory Length:", len(history))
 
-            # AI Analysis
-            if analysis_result is None:
-                analysis_result = EventAnalysisAgent.run(
-                    article.title,
-                    article.content,
-                    history,
-                )
 
-            analysis = AnalysisService.create(
-                db,
-                article_id=article.id,
-                summary=analysis_result["summary"],
-                event_type=analysis_result["event_type"],
-                sentiment=analysis_result["sentiment"],
-                reasoning=analysis_result["reasoning"],
-                confidence=analysis_result["confidence"],
-                model_name="llama-3.3-70b-versatile",
-            )
 
             # Market Predictions
             prediction_result = MarketPredictionAgent.run(

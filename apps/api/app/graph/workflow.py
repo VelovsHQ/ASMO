@@ -105,6 +105,11 @@ builder.add_conditional_edges(
 
 builder.add_edge(
     "event_analysis",
+    "save_analysis",
+)
+
+builder.add_edge(
+    "save_analysis",
     "process_article",
 )
 
