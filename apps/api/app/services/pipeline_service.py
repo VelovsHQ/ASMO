@@ -53,6 +53,10 @@ class PipelineService:
                     embeddings=similar_embeddings,
                 )
             )
+            historical_cases = HistoryService.build_cases(
+                db=db,
+                articles=historical_articles,
+            )
 
             print("\n" + "=" * 60)
             print("RAG RETRIEVAL")
@@ -64,8 +68,7 @@ class PipelineService:
                 print("-" * 60)
 
             history = HistoricalMemoryAgent.run(
-                db=db,
-                articles=historical_articles,
+                historical_cases,
             )
 
             print("\n")

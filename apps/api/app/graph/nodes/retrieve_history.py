@@ -26,16 +26,12 @@ def retrieve_history(state):
             )
         )
 
-        cases = HistoryService.build_cases(
+        historical_articles = HistoryService.build_cases(
             db=db,
             articles=articles,
         )
 
-        history = HistoryService.build_context(
-            cases,
-        )
-
-        state["history"] = history
+        state["historical_articles"] = historical_articles
 
         print("✅ Historical Context Built")
 

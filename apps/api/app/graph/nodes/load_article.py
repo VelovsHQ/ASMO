@@ -5,6 +5,7 @@ from app.services.article_service import ArticleService
 def load_article(state):
 
     db = SessionLocal()
+    state["db"] = db
 
     try:
 
@@ -18,5 +19,4 @@ def load_article(state):
         return state
 
     finally:
-
-        db.close()
+        pass
