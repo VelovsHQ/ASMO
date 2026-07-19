@@ -20,7 +20,10 @@ from app.agents.alert_agent import AlertAgent
 class PipelineService:
 
     @staticmethod
-    def process_article(article_id: int):
+    def process_article(
+        article_id: int,
+        analysis_result: dict | None = None,
+    ):
 
         db = SessionLocal()
 
@@ -80,11 +83,12 @@ class PipelineService:
             print("\nHistory Length:", len(history))
 
             # AI Analysis
-            analysis_result = EventAnalysisAgent.run(
-                article.title,
-                article.content,
-                history,
-            )
+            if analysis_result is None:
+                analysis_result = EventAnalysisAgent.run(
+                    article.title,
+                    article.content,
+                    history,
+                )
 
             analysis = AnalysisService.create(
                 db,
