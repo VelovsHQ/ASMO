@@ -23,6 +23,7 @@ class PipelineService:
     def process_article(
         article_id: int,
         analysis_result: dict | None = None,
+        history: str | None = None,
     ):
 
         db = SessionLocal()
@@ -38,49 +39,50 @@ class PipelineService:
             if article is None:
                 raise ValueError(f"Article {article_id} not found")
 
-            embedding = EmbeddingService.generate_embedding(
-                article.content,
-            )
-
-            similar_embeddings = (
-                ArticleEmbeddingService.find_similar(
-                    db=db,
-                    embedding=embedding,
-                    limit=5,
+            if history is None:
+                embedding = EmbeddingService.generate_embedding(
+                    article.content,
                 )
-            )
 
-            historical_articles = (
-                ArticleEmbeddingService.get_articles_from_embeddings(
-                    db=db,
-                    embeddings=similar_embeddings,
+                similar_embeddings = (
+                    ArticleEmbeddingService.find_similar(
+                        db=db,
+                        embedding=embedding,
+                        limit=5,
+                    )
                 )
-            )
-            historical_cases = HistoryService.build_cases(
-                db=db,
-                articles=historical_articles,
-            )
 
-            print("\n" + "=" * 60)
-            print("RAG RETRIEVAL")
-            print("=" * 60)
+                historical_articles = (
+                    ArticleEmbeddingService.get_articles_from_embeddings(
+                        db=db,
+                        embeddings=similar_embeddings,
+                    )
+                )
+                historical_cases = HistoryService.build_cases(
+                    db=db,
+                    articles=historical_articles,
+                )
 
-            for historical_article in historical_articles:
-                print(f"Article #{historical_article.id}")
-                print(historical_article.title)
-                print("-" * 60)
+                print("\n" + "=" * 60)
+                print("RAG RETRIEVAL")
+                print("=" * 60)
 
-            history = HistoricalMemoryAgent.run(
-                historical_cases,
-            )
+                for historical_article in historical_articles:
+                    print(f"Article #{historical_article.id}")
+                    print(historical_article.title)
+                    print("-" * 60)
 
-            print("\n")
-            print("=" * 60)
-            print("HISTORICAL CASES")
-            print("=" * 60)
-            print(history[:2500])
+                history = HistoricalMemoryAgent.run(
+                    historical_cases,
+                )
 
-            print("\nHistory Length:", len(history))
+                print("\n")
+                print("=" * 60)
+                print("HISTORICAL CASES")
+                print("=" * 60)
+                print(history[:2500])
+
+                print("\nHistory Length:", len(history))
 
             # AI Analysis
             if analysis_result is None:
