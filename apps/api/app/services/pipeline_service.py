@@ -3,16 +3,18 @@ from sqlalchemy import select
 from app.db.session import SessionLocal
 from app.models.market import Market
 
-from app.services.ai_service import (
-    analyze_article,
-    predict_markets,
-)
+from app.agents.market_prediction_agent import MarketPredictionAgent
+from app.agents.event_analysis_agent import EventAnalysisAgent
 from app.services.analysis_service import AnalysisService
 from app.services.article_service import ArticleService
 from app.services.prediction_service import PredictionService
 from app.services.embedding_service import EmbeddingService
 from app.services.article_embedding_service import ArticleEmbeddingService
 from app.services.history_service import HistoryService
+from app.agents.historical_memory_agent import HistoricalMemoryAgent
+from app.agents.confidence_review_agent import ConfidenceReviewAgent
+from app.agents.portfolio_impact_agent import PortfolioImpactAgent
+from app.agents.alert_agent import AlertAgent
 
 
 class PipelineService:
@@ -61,12 +63,10 @@ class PipelineService:
                 print(historical_article.title)
                 print("-" * 60)
 
-            cases = HistoryService.build_cases(
+            history = HistoricalMemoryAgent.run(
                 db=db,
                 articles=historical_articles,
             )
-
-            history = HistoryService.build_context(cases)
 
             print("\n")
             print("=" * 60)
@@ -77,7 +77,7 @@ class PipelineService:
             print("\nHistory Length:", len(history))
 
             # AI Analysis
-            analysis_result = analyze_article(
+            analysis_result = EventAnalysisAgent.run(
                 article.title,
                 article.content,
                 history,
@@ -95,7 +95,7 @@ class PipelineService:
             )
 
             # Market Predictions
-            prediction_result = predict_markets(
+            prediction_result = MarketPredictionAgent.run(
                 article.title,
                 article.content,
             )
@@ -127,6 +127,24 @@ class PipelineService:
 
                 created_predictions.append(prediction)
 
+            review = ConfidenceReviewAgent.run(
+                analysis,
+                created_predictions,
+            )
+
+            print(review)
+
+            portfolio_actions = PortfolioImpactAgent.run(
+                created_predictions,
+            )
+
+            print(portfolio_actions)
+            alert = AlertAgent.run(
+                review,
+                portfolio_actions,
+            )
+
+            print(alert)
             article_id = article.id
             analysis_id = analysis.id
             prediction_count = len(created_predictions)
