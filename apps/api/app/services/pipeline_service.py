@@ -12,6 +12,7 @@ from app.services.embedding_service import EmbeddingService
 from app.services.article_embedding_service import ArticleEmbeddingService
 from app.services.history_service import HistoryService
 from app.agents.historical_memory_agent import HistoricalMemoryAgent
+from app.agents.confidence_review_agent import ConfidenceReviewAgent
 
 
 class PipelineService:
@@ -124,6 +125,12 @@ class PipelineService:
 
                 created_predictions.append(prediction)
 
+            review = ConfidenceReviewAgent.run(
+                analysis,
+                created_predictions,
+            )
+
+            print(review)
             article_id = article.id
             analysis_id = analysis.id
             prediction_count = len(created_predictions)
